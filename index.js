@@ -1,20 +1,33 @@
 var _ = require('lodash'),
     async = require('async'),
-    redis = require('redis'),
     winston = require('winston'),
     moment = require('moment'),
     util = require('util'),
+    redis = require('./lib/redis'),
     DreckLogger = require('./lib/logger');
 
-function Job(name, desc, timeout, client, cb) {
+function Job(name, desc, timeout, cb) {
+  if (name.match(/\s/))
+    return cb(new TypeError('Name cannot contain spaces, use underscores instead'));
+
   var logsKey, statsKey;
+  var client = redis.createClient();
   var _timeout = setTimeout(function() {
     done('Timeout');
   }, timeout*60*1000);
 
   var progress = function(value, _cb) {
-    var _value = _.isNumber(value) && value.toString() || value;
-    client.hset(statsKey, 'progress', _value, function(err, result) {
+    var isFloat = function (n) {
+      return n===+n && n!==(n|0);
+    }
+
+    if (!_.isNumber(value))
+      return _cb('Must pass a number');
+
+    if (!isFloat(value))
+      return _cb('Must pass a float');
+
+    client.hset(statsKey, 'progress', value.toString(), function(err, result) {
       if (err && _cb) return _cb(err);
       if (_cb) return _cb(null, result);
       return;
@@ -39,17 +52,15 @@ function Job(name, desc, timeout, client, cb) {
         });
       },
       function(series) {
-        if (error) {
-          logger.error(error, function() {
-            series(error);
-            process.exit(1);              
-          });
-        }    
+        if (!error) return series();
+        logger.error(error, function() {
+          return series(error);
+        });
       }
     ], function(err) {
       if (err && _cb) return _cb(err);
       if (err) process.exit(1);
-      if (_cb) return _cb();
+      if (_cb) return _cb(null, true);
       process.exit();
     });
   };
@@ -116,23 +127,18 @@ function Job(name, desc, timeout, client, cb) {
     Object.defineProperty(self, 'logger', { value: logger, enumerable: true });
     Object.defineProperty(self, 'progress', { value: progress, enumerable: true });
     Object.defineProperty(self, 'done', { value: done, enumerable: true });
+    Object.defineProperty(self, 'started', { value: started, enumerable: true });
 
     return cb(null, self);
   });
 }
 
-module.exports = function(name, desc, timeout, host, port, cb) {
-  if (!this._client) {
-    if (!cb) {
-      cb = host;
-      this._client = redis.createClient();
-    } else {
-      this._client = redis.createClient(host, port);
-    }
-  }
+module.exports = function(name, desc, timeout, cb) {
+  return new Job(name, desc, timeout, cb);
+}
 
-  return new Job(name, desc, timeout, this._client, cb);
-}  
+module.exports.redis = redis;
+
 /*    
     sadd dreck:jobs name
       hmset dreck:jobs:name name desc timeout

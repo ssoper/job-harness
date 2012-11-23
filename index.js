@@ -11,7 +11,7 @@ function Job(name, desc, timeout, cb) {
     return cb(new TypeError('Name cannot contain spaces, use underscores instead'));
 
   var logsKey, statsKey;
-  var client = redis.createClient();
+  var client = redis.client();
   var _timeout = setTimeout(function() {
     done('Timeout');
   }, timeout*60*1000);

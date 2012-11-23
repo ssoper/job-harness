@@ -46,6 +46,7 @@ describe('job', function() {
         assert.ifError(error);
         assert.ok(results);
         assert.ok(Array.isArray(results));
+        assert.equal(1, results.length);
         done();
       });
     });
@@ -54,6 +55,7 @@ describe('job', function() {
       client.lrange('dreck:logs:' + name, 0, -1, function(error, results) {
         assert.ifError(error);
         assert.ok(results);
+        assert.equal(1, results.length);
         done();
       });
     });
@@ -99,6 +101,7 @@ describe('job', function() {
       it('retrieve', function(done) {
         client.lrange('dreck:logs:' + name + ':' + job.started, 0, -1, function(error, results) {
           assert.ifError(error);
+          assert.equal(results[0], 'Started')
           done();
         });
       });

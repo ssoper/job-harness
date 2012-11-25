@@ -31,6 +31,7 @@ describe('job', function() {
       assert.ok(result.progress);
       assert.ok(result.done);
       assert.ok(result.started);
+      assert.ok(result.timedOut);
       job = result;
       job.done(function(err, res) {
         assert.ifError(err);
@@ -40,13 +41,22 @@ describe('job', function() {
     });
   });
 
+  it('times out', function(done) {
+    dreck('times_out', 'Times out', maxTimeout, function(error, result) {
+      result.timedOut(function() {
+        assert.ok(result);
+        done();
+      });
+    });
+  });
+
   describe('redis', function() {
     it('logs', function(done) {
       client.smembers('dreck:jobs', function(error, results) {
         assert.ifError(error);
         assert.ok(results);
         assert.ok(Array.isArray(results));
-        assert.equal(1, results.length);
+        assert.equal(2, results.length);
         done();
       });
     });

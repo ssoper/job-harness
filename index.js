@@ -34,6 +34,11 @@ function Job(name, desc, timeout, cb) {
     });
   };
 
+  var timedOut = function(_cb) {
+    if (_cb) return _cb();
+    process.exit(1);
+  }
+
   var done = function(error, _cb) {
     clearTimeout(_timeout);
 
@@ -58,6 +63,7 @@ function Job(name, desc, timeout, cb) {
         });
       }
     ], function(err) {
+      if (err && err === 'Timeout') return timedOut();
       if (err && _cb) return _cb(err);
       if (err) process.exit(1);
       if (_cb) return _cb(null, true);
@@ -128,6 +134,7 @@ function Job(name, desc, timeout, cb) {
     Object.defineProperty(self, 'progress', { value: progress, enumerable: true });
     Object.defineProperty(self, 'done', { value: done, enumerable: true });
     Object.defineProperty(self, 'started', { value: started, enumerable: true });
+    Object.defineProperty(self, 'timedOut', { value: timedOut, enumerable: true });
 
     return cb(null, self);
   });

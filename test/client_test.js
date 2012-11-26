@@ -52,7 +52,7 @@ describe('job', function() {
 
   describe('redis', function() {
     it('logs', function(done) {
-      client.smembers('dreck:jobs', function(error, results) {
+      client.smembers(dreck.redisKey, function(error, results) {
         assert.ifError(error);
         assert.ok(results);
         assert.ok(Array.isArray(results));
@@ -62,7 +62,7 @@ describe('job', function() {
     });
 
     it('start times', function(done) {
-      client.lrange('dreck:logs:' + name, 0, -1, function(error, results) {
+      client.lrange(dreck.redisKey + ':logs:' + name, 0, -1, function(error, results) {
         assert.ifError(error);
         assert.ok(results);
         assert.equal(1, results.length);
@@ -109,7 +109,7 @@ describe('job', function() {
       });
 
       it('retrieve', function(done) {
-        client.lrange('dreck:logs:' + name + ':' + job.started, 0, -1, function(error, results) {
+        client.lrange(dreck.redisKey + ':logs:' + name + ':' + job.started, 0, -1, function(error, results) {
           assert.ifError(error);
           assert.equal(results[0], 'Started')
           done();

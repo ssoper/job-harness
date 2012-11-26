@@ -6,6 +6,10 @@ A light weight harness to run your jobs in.
 
 A scheduler. For that use `crond`.
 
+#### Contributing
+
+[Install compass](http://compass-style.org/install/)
+
 ### License
 
 MIT

@@ -4,5 +4,10 @@ block head
   link(rel='stylesheet', href='/stylesheets/styles.css')
 
 block content
-  h1= title
-  p Welcome to #{title}
+  each chore in chores
+    #app
+      div(class='#{chore.state} traffic-light')
+      p
+        = chore.name
+      p
+        = chore.desc

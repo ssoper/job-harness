@@ -1,7 +1,8 @@
-var chores = require('../../index');
+var chores = require('../../lib/chores');
 
 exports.index = function(req, res) {
-  
-  
-  res.render('index', { title: 'Chores' });
+  chores.all(function(err, results) {
+    if (err) return res.render('index', { title: 'Error' });
+    res.render('index', { title: 'Chores', chores: results });
+  });
 };

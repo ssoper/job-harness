@@ -36,26 +36,25 @@ ul
   +box-shadow(#f1f1f1 0 1px inset)
   +border-radius(6px 6px 0 0)
 
-#traffic-light
+.traffic-light
   display: inline
   margin-left: 4px
   float: left
-  .aqua
-    width: 25px
-    height: 25px
-    display: block
-    margin: 5px 4px 4px 4px
-    background: #000
-    float: left
-    +background-image(radial-gradient(50% 150%, rgba(#fff, .7) 8%, rgba(#fff, 0) 60%), radial-gradient(50% -1px, #fff 1px, rgba(#fff, 0) 30%))
-    +box-shadow(rgba(#000, .9) 0 1px 6px inset, rgba(#666, .5) 0 1px)
-    +border-radius(100px)
-    &#red
-      background-color: #f24443
-    &#yellow
-      background-color: #f0aa5a
-    &#green
-      background-color: #88be72
+  width: 25px
+  height: 25px
+  display: block
+  margin: 5px 4px 4px 4px
+  background: #000
+  float: left
+  +background-image(radial-gradient(50% 150%, rgba(#fff, .7) 8%, rgba(#fff, 0) 60%), radial-gradient(50% -1px, #fff 1px, rgba(#fff, 0) 30%))
+  +box-shadow(rgba(#000, .9) 0 1px 6px inset, rgba(#666, .5) 0 1px)
+  +border-radius(100px)
+  &.failed
+    background-color: #f24443
+  &.timeout
+    background-color: #f0aa5a
+  &.success
+    background-color: #88be72
 
 #view
   width: 482px

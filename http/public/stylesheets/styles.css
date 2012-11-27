@@ -68,13 +68,10 @@ ul li {
 }
 
 /* line 39, ../sass/styles.sass */
-#traffic-light {
+.traffic-light {
   display: inline;
   margin-left: 4px;
   float: left;
-}
-/* line 43, ../sass/styles.sass */
-#traffic-light .aqua {
   width: 25px;
   height: 25px;
   display: block;
@@ -95,31 +92,31 @@ ul li {
   -o-border-radius: 100px;
   border-radius: 100px;
 }
-/* line 53, ../sass/styles.sass */
-#traffic-light .aqua#red {
+/* line 52, ../sass/styles.sass */
+.traffic-light.failed {
   background-color: #f24443;
 }
-/* line 55, ../sass/styles.sass */
-#traffic-light .aqua#yellow {
+/* line 54, ../sass/styles.sass */
+.traffic-light.timeout {
   background-color: #f0aa5a;
 }
-/* line 57, ../sass/styles.sass */
-#traffic-light .aqua#green {
+/* line 56, ../sass/styles.sass */
+.traffic-light.success {
   background-color: #88be72;
 }
 
-/* line 60, ../sass/styles.sass */
+/* line 59, ../sass/styles.sass */
 #view {
   width: 482px;
   height: 340px;
 }
-/* line 63, ../sass/styles.sass */
+/* line 62, ../sass/styles.sass */
 #view * {
   display: inline;
   float: left;
 }
 
-/* line 66, ../sass/styles.sass */
+/* line 65, ../sass/styles.sass */
 #tree {
   width: 80px;
   height: 320px;
@@ -131,7 +128,7 @@ ul li {
   box-shadow: #bdbdbd -1px 0 inset;
 }
 
-/* line 74, ../sass/styles.sass */
+/* line 73, ../sass/styles.sass */
 #textfield {
   width: 362px;
   height: 340px;
@@ -140,7 +137,7 @@ ul li {
   background-color: #222222;
 }
 
-/* line 81, ../sass/styles.sass */
+/* line 80, ../sass/styles.sass */
 #statusbar {
   height: 21px;
   display: block;

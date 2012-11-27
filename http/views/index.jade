@@ -2,12 +2,13 @@ extends layout
 
 block head
   link(rel='stylesheet', href='/stylesheets/styles.css')
+  script(type='text/javascript', src='/javascripts/moment.min.js')
 
 block content
   each chore in chores
-    #app
+    .chore
       div(class='#{chore.state} traffic-light')
-      p
-        = chore.name
-      p
+      p.desc
         = chore.desc
+      p.stat
+        = chore.started

@@ -154,9 +154,9 @@ module.exports = function(name, desc, timeout, cb) {
 }
 
 module.exports.redis = redis;
-Object.defineProperty(module.exports, 'redisKey', { value: 'chores' });
+Object.defineProperty(module.exports, 'redisKey', { value: redisKey });
 
-/*    
+/*
 sadd chores name
   hmset chores:name name desc timeout
     lpush chores:logs:name started

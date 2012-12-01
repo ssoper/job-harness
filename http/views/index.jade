@@ -11,3 +11,5 @@ block content
       p.desc
         = chore.desc
       p.stat Last ran #{readableDate(chore.started)}, took #{readableDuration(chore)}
+      p.stat
+        = compareToAverage(chore)

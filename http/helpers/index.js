@@ -34,6 +34,15 @@ module.exports = {
 
   choreId: function(chore) {
     return chore.name + '_' + chore.started;
+  },
+
+  compareToAverage: function(chore) {
+    var diff = (chore.ended - chore.started) - chore.average;
+    if (diff < 0)
+      return 'Ran ' + Math.abs(diff) + ' faster than average';
+    if (diff > 0)
+      return 'Ran ' + Math.abs(diff) + ' slower than average';
+    return 'Ran in the same amount of time as average';
   }
 }
 // [ { name: 'test_1',

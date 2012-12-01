@@ -22,9 +22,11 @@ ul
 .chore
   display: block
   width: 482px
-  height: 180px
+  height: auto
+  min-height: 80px
   margin: 0 auto
     bottom: 20px
+  padding-bottom: 20px
   background-color: #8a8a8a
   +box-shadow(rgba(#000, .1) 1px 1px, rgba(#000, .1) -1px -1px, rgba(#000, .1) 1px -1px, rgba(#000, .1) -1px 1px, rgba(#000, .8) 0 0 70px)
   +border-radius(5px)
@@ -36,6 +38,7 @@ ul
     font-size: 15px
     color: white
     padding-top: 15px
+    padding-left: 52px
 
 .traffic-light
   display: inline
@@ -53,6 +56,7 @@ ul
   +background-image(radial-gradient(50% 150%, rgba(#fff, .7) 8%, rgba(#fff, 0) 60%), radial-gradient(50% -1px, #fff 1px, rgba(#fff, 0) 30%))
   +box-shadow(rgba(#000, .9) 0 1px 6px inset, rgba(#666, .5) 0 1px)
   +border-radius(100px)
+  background-color: #eee
   &.failed
     background-color: #f24443
   &.timeout

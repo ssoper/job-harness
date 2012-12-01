@@ -6,9 +6,8 @@ block head
 
 block content
   each chore in chores
-    .chore
+    .chore(id='#{choreId(chore)}')
       div(class='#{chore.state} traffic-light')
       p.desc
         = chore.desc
-      p.stat
-        = chore.started
+      p.stat Last ran #{readableDate(chore.started)}, took #{readableDuration(chore)}

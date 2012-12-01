@@ -3,6 +3,7 @@ var _ = require('lodash'),
     http = require('http'),
     path = require('path'),
     routes = require('./routes'),
+    helpers = require('./helpers'),
     app = express();
 
 exports.start = function(resourcePath, port) {
@@ -20,6 +21,7 @@ exports.start = function(resourcePath, port) {
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
+    _.extend(app.locals, helpers);
   });
 
   app.get(resourcePath || '/', routes.index);

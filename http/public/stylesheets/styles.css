@@ -34,9 +34,11 @@ ul li {
 .chore {
   display: block;
   width: 482px;
-  height: 180px;
+  height: auto;
+  min-height: 80px;
   margin: 0 auto;
   margin-bottom: 20px;
+  padding-bottom: 20px;
   background-color: #8a8a8a;
   -webkit-box-shadow: rgba(0, 0, 0, 0.1) 1px 1px, rgba(0, 0, 0, 0.1) -1px -1px, rgba(0, 0, 0, 0.1) 1px -1px, rgba(0, 0, 0, 0.1) -1px 1px, rgba(0, 0, 0, 0.8) 0 0 70px;
   -moz-box-shadow: rgba(0, 0, 0, 0.1) 1px 1px, rgba(0, 0, 0, 0.1) -1px -1px, rgba(0, 0, 0, 0.1) 1px -1px, rgba(0, 0, 0, 0.1) -1px 1px, rgba(0, 0, 0, 0.8) 0 0 70px;
@@ -47,20 +49,21 @@ ul li {
   -o-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 31, ../sass/styles.sass */
+/* line 33, ../sass/styles.sass */
 .chore .desc {
   font-size: 20px;
   color: white;
   padding-top: 15px;
 }
-/* line 35, ../sass/styles.sass */
+/* line 37, ../sass/styles.sass */
 .chore .stat {
   font-size: 15px;
   color: white;
   padding-top: 15px;
+  padding-left: 52px;
 }
 
-/* line 40, ../sass/styles.sass */
+/* line 43, ../sass/styles.sass */
 .traffic-light {
   display: inline;
   margin-left: 4px;
@@ -86,16 +89,17 @@ ul li {
   -ms-border-radius: 100px;
   -o-border-radius: 100px;
   border-radius: 100px;
+  background-color: #eeeeee;
 }
-/* line 56, ../sass/styles.sass */
+/* line 60, ../sass/styles.sass */
 .traffic-light.failed {
   background-color: #f24443;
 }
-/* line 58, ../sass/styles.sass */
+/* line 62, ../sass/styles.sass */
 .traffic-light.timeout {
   background-color: #f0aa5a;
 }
-/* line 60, ../sass/styles.sass */
+/* line 64, ../sass/styles.sass */
 .traffic-light.success {
   background-color: #88be72;
 }

@@ -1,7 +1,7 @@
 var assert = require('assert')
     async = require('async'),
     fakeredis = require('fakeredis'),
-    dreck = require('../index'),
+    chore = require('../index'),
     maxTimeout = 0.05; // 3 seconds
 
 describe('job', function() {
@@ -10,22 +10,22 @@ describe('job', function() {
       desc = 'Job 1';
 
   before(function() {
-    dreck.redis.createClient = function() {
+    chore.redis.createClient = function() {
       return fakeredis.createClient();
     };
-    client = dreck.redis.client();
+    client = chore.redis.client();
   });
 
   it('doesnt allow spaces in name', function(done) {
-    dreck('invalid name', 'Valid Desc', maxTimeout, function(error, result) {
+    chore('invalid name', 'Valid Desc', maxTimeout, function(error, result) {
       assert.ok(error);
       assert.ifError(result);
       done();
     });
   });
 
-  it('is valid', function(done) {
-    dreck(name, desc, maxTimeout, function(error, result) {
+  it('succeeds', function(done) {
+    chore(name, desc, maxTimeout, function(error, result) {
       assert.ifError(error);
       assert.ok(result.logger);
       assert.ok(result.progress);
@@ -42,7 +42,7 @@ describe('job', function() {
   });
 
   it('times out', function(done) {
-    dreck('times_out', 'Times out', maxTimeout, function(error, result) {
+    chore('times_out', 'Times out', maxTimeout, function(error, result) {
       result.timedOut(function() {
         assert.ok(result);
         done();
@@ -50,9 +50,18 @@ describe('job', function() {
     });
   });
 
+  it('fails', function(done) {
+    chore(name, desc, maxTimeout, function(error, result) {
+      result.done('Failure', function(err, res) {
+        console.log(err)
+        console.log(res)
+      });
+    });
+  });
+
   describe('redis', function() {
     it('logs', function(done) {
-      client.smembers(dreck.redisKey, function(error, results) {
+      client.smembers(chore.redisKey, function(error, results) {
         assert.ifError(error);
         assert.ok(results);
         assert.ok(Array.isArray(results));
@@ -62,10 +71,10 @@ describe('job', function() {
     });
 
     it('start times', function(done) {
-      client.lrange(dreck.redisKey + ':logs:' + name, 0, -1, function(error, results) {
+      client.lrange(chore.redisKey + ':logs:' + name, 0, -1, function(error, results) {
         assert.ifError(error);
         assert.ok(results);
-        assert.equal(1, results.length);
+        assert.equal(2, results.length);
         done();
       });
     });
@@ -109,7 +118,7 @@ describe('job', function() {
       });
 
       it('retrieve', function(done) {
-        client.lrange(dreck.redisKey + ':logs:' + name + ':' + job.started, 0, -1, function(error, results) {
+        client.lrange(chore.redisKey + ':logs:' + name + ':' + job.started, 0, -1, function(error, results) {
           assert.ifError(error);
           assert.equal(results[0], 'Started')
           done();

@@ -52,8 +52,9 @@ function Job(name, desc, timeout, cb) {
       error = null;
     }
 
-    var ended = moment().unix();
-    var state = 'success';
+    var ended = moment().unix(),
+        state = 'success',
+        self = this;
 
     if (error) state = 'failure';
     if (error === 'Timeout') state = 'timeout';
@@ -66,7 +67,8 @@ function Job(name, desc, timeout, cb) {
       },
       function(series) {
         if (!error) return series();
-        logger.error(error, function() {
+        console.log(self)
+        self.logger.error(error, function() {
           return series(error);
         });
       }
